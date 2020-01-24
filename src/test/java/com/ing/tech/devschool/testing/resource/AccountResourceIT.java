@@ -38,19 +38,17 @@ public class AccountResourceIT {
     @Test
     public void shouldReturnOkWhenAccountIsPresent () throws Exception {
         MockHttpServletRequestBuilder requestBuilder= MockMvcRequestBuilders
-                .get("http://localhost:8081/accounts/100");
+                .get("/accounts/100");
         Mockito.when(accountService.findById(any())).thenReturn(new Account());
         MvcResult result=mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         Assert.assertEquals(HttpStatus.OK.value(),response.getStatus());
-
-
     }
 
     @Test
     public void shouldReturnBadRequestWhenAccountIsNotPresent() throws Exception {
         MockHttpServletRequestBuilder requestBuilder= MockMvcRequestBuilders
-                .get("http://localhost:8081/accounts/10");
+                .get("/accounts/10");
         Mockito.when(accountService.findById(any())).thenReturn(null);
         MvcResult result=mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -60,8 +58,8 @@ public class AccountResourceIT {
 
     @Test
     public void shouldDeleteAccountIfExists() throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .delete("/accounts/{id}",1);
+//        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+//                .delete("/accounts/{id}",1);
 
         when(accountService.deleteIfExists(1L)).thenReturn(true);
         MvcResult result = mockMvc.perform( MockMvcRequestBuilders.delete("/accounts/1", 1) )
@@ -72,8 +70,8 @@ public class AccountResourceIT {
 
     @Test
     public void shouldNotDeleteAccountIfNotExists() throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .delete("/accounts/{id}",1);
+//        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+//                .delete("/accounts/{id}",1);
 
         when(accountService.deleteIfExists(1000L)).thenReturn(false);
         MvcResult result = mockMvc.perform( MockMvcRequestBuilders.delete("/accounts/1000", 1000) )
